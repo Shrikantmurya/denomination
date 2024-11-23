@@ -53,6 +53,8 @@ class _HistoryState extends State<History> {
               itemCount: historyData.length,
               itemBuilder: (context, index) {
                 final data = historyData[index];
+                final cashData =
+                    historyController.userList.value.cashdata?.value2000;
                 return Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Slidable(
@@ -89,7 +91,7 @@ ${data.date} ${data.time}
 Rgg
 ---------------------------------------
 Rupee x Counts = Total
-₹ 2,000  x ${data.cashvalue?.value2000?[1] ?? 2} = ₹ 44,000
+₹ 2,000  x ${data.cashvalue} = ₹ 44,000
 ₹ 500    x 56 = ₹ 28,000
 ---------------------------------------
 Total Counts:

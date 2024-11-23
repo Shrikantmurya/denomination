@@ -35,15 +35,18 @@ class HistoryController extends GetxController {
           mutableData['cashvalue'] is String) {
         String cashvalueString = mutableData['cashvalue'];
 
-        cashvalueString = cashvalueString.replaceAllMapped(
-            RegExp(r'(\w+):'), (match) => '"${match.group(1)}":');
+        // Ensure cashvalueString is valid JSON before attempting to decode
+        print('Raw cashvalueString: $cashvalueString');
 
         try {
-          mutableData['cashvalue'] = jsonDecode(cashvalueString);
-          cashJson = jsonDecode(cashvalueString);
+          // Check if the string is properly formatted before decoding
+          var parsedCashValue = jsonDecode(cashvalueString);
+
+          print('Parsed cashvalue: $parsedCashValue');
+
+          mutableData['cashvalue'] = Cashvalue.fromJson(parsedCashValue);
         } catch (e) {
           print('Error decoding cashvalue: $e');
-
           mutableData['cashvalue'] = null;
         }
       }
@@ -51,11 +54,16 @@ class HistoryController extends GetxController {
       return mutableData;
     }).toList();
 
-    setUserList(HistoryListModel.fromJson(
-        {"retrievedData": dataWithParsedCashValue, "cashdata": cashJson}));
+    setUserList(
+        HistoryListModel.fromJson({"retrievedData": dataWithParsedCashValue}));
 
-    print(dataWithParsedCashValue);
-    print('rani ${userList.value.cashdata?.value500?[0]}');
+    if (userList.value.retrievedData != null &&
+        userList.value.retrievedData!.isNotEmpty) {
+      var cashvalue = userList.value.retrievedData?[0].cashvalue;
+      print(cashvalue);
+    } else {
+      print('retrievedData is empty or null');
+    }
   }
 
   Future<void> deleteHistory(index) async {

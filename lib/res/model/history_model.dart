@@ -73,31 +73,25 @@ class RetrievedData {
     id = json['id'];
     name = json['name'];
     total = json['total'] is String
-        ? double.tryParse(json['total']) // Handle string to double conversion
+        ? double.tryParse(json['total'])
         : json['total']?.toDouble();
     category = json['category'];
     date = json['date'];
     time = json['time'];
 
-    // Check if cashvalue exists and is in a valid format
     if (json['cashvalue'] != null) {
       if (json['cashvalue'] is String) {
-        // Handle cashvalue if it's a string (ensure it's a valid JSON string)
         try {
-          // If it's a string, ensure it's a valid JSON format
           String formattedJson = json['cashvalue'];
           if (formattedJson.startsWith("{") && formattedJson.endsWith("}")) {
-            // It seems like a valid JSON string, decode it
             cashvalue = Cashvalue.fromJson(jsonDecode(formattedJson));
           } else {
-            // Log or handle the issue where the cashvalue string is improperly formatted
             print("Invalid cashvalue string: $formattedJson");
           }
         } catch (e) {
           print("Error decoding cashvalue: $e");
         }
       } else if (json['cashvalue'] is Map) {
-        // If it's already a Map, directly parse it
         cashvalue = Cashvalue.fromJson(json['cashvalue']);
       }
     }
