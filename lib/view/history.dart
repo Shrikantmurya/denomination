@@ -89,7 +89,6 @@ Denomination
 ${data.date} ${data.time}
 Rgg
 ---------------------------------------
-<<<<<<< HEAD
 Rupee x Counts = Total
 ₹ 2000    x ${data.cashvalue?.valueCntr2000 ?? 0} = ${formatCurrency.format((data.cashvalue?.valueCntr2000 ?? 0) * 2000)}
 ₹ 500    x ${data.cashvalue?.valueCntr500 ?? 0} = ${formatCurrency.format((data.cashvalue?.valueCntr500 ?? 0) * 500)}
@@ -105,10 +104,9 @@ Rupee x Counts = Total
 Total Counts:
 ${(data.cashvalue?.valueCntr2000 ?? 0) + (data.cashvalue?.valueCntr500 ?? 0) + (data.cashvalue?.valueCntr200 ?? 0) + (data.cashvalue?.valueCntr100 ?? 0) + (data.cashvalue?.valueCntr50 ?? 0) + (data.cashvalue?.valueCntr20 ?? 0) + (data.cashvalue?.valueCntr10 ?? 0) + (data.cashvalue?.valueCntr5 ?? 0) + (data.cashvalue?.valueCntr2 ?? 0) + (data.cashvalue?.valueCntr1 ?? 0)}
 =======
->>>>>>> 61dc6a5 (update)
 Grand Total Amount:
 ${formatCurrency.format(data.total)}
-${Utils.convertNumberToWords(data.total as int)} only/-
+${Utils.convertNumberToWords(int.parse(data.total.toString()))} only/-
 ''';
                                 Share.share(textToShare);
                               },
