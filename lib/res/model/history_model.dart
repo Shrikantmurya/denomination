@@ -32,20 +32,38 @@ class HistoryListModel {
 }
 
 class Cashdata {
-  List<int>? value2000;
-  List<int>? value500;
+  int? value2000;
+  int? valueCntr2000;
+  int? value500;
+  int? valueCntr500;
+  int? value200;
+  int? valueCntr200;
 
-  Cashdata({this.value2000, this.value500});
+  Cashdata(
+      {this.value2000,
+      this.valueCntr2000,
+      this.value500,
+      this.valueCntr500,
+      this.value200,
+      this.valueCntr200});
 
   Cashdata.fromJson(Map<String, dynamic> json) {
-    value2000 = json['value_2000'].cast<int>();
-    value500 = json['value_500'].cast<int>();
+    value2000 = json['value_2000'];
+    valueCntr2000 = json['valueCntr_2000'];
+    value500 = json['value_500'];
+    valueCntr500 = json['valueCntr_500'];
+    value200 = json['value_200'];
+    valueCntr200 = json['valueCntr_200'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['value_2000'] = this.value2000;
+    data['valueCntr_2000'] = this.valueCntr2000;
     data['value_500'] = this.value500;
+    data['valueCntr_500'] = this.valueCntr500;
+    data['value_200'] = this.value200;
+    data['valueCntr_200'] = this.valueCntr200;
     return data;
   }
 }
@@ -113,50 +131,54 @@ class RetrievedData {
 }
 
 class Cashvalue {
-  List<int>? value2000;
-  List<int>? value500;
-  List<int>? value100;
-  List<int>? value50;
-  List<int>? value20;
-  List<int>? value10;
-  List<int>? value5;
-  List<int>? value2;
-  List<int>? value1;
+  int? valueCntr2000;
+  int? valueCntr500;
+  int? valueCntr200;
+  int? valueCntr100;
+  int? valueCntr50;
+  int? valueCntr20;
+  int? valueCntr10;
+  int? valueCntr5;
+  int? valueCntr2;
+  int? valueCntr1;
 
   Cashvalue(
-      {this.value2000,
-      this.value500,
-      this.value100,
-      this.value50,
-      this.value20,
-      this.value10,
-      this.value5,
-      this.value2,
-      this.value1});
+      {this.valueCntr2000,
+      this.valueCntr500,
+      this.valueCntr200,
+      this.valueCntr100,
+      this.valueCntr50,
+      this.valueCntr20,
+      this.valueCntr10,
+      this.valueCntr5,
+      this.valueCntr2,
+      this.valueCntr1});
 
   Cashvalue.fromJson(Map<String, dynamic> json) {
-    value2000 = json['value_2000'].cast<int>();
-    value500 = json['value_500'].cast<int>();
-    value100 = json['value_100'].cast<int>();
-    value50 = json['value_50'].cast<int>();
-    value20 = json['value_20'].cast<int>();
-    value10 = json['value_10'].cast<int>();
-    value5 = json['value_5'].cast<int>();
-    value2 = json['value_2'].cast<int>();
-    value1 = json['value_1'].cast<int>();
+    valueCntr2000 = json['valueCntr_2000'];
+    valueCntr500 = json['valueCntr_500'];
+    valueCntr200 = json['valueCntr_200'];
+    valueCntr100 = json['valueCntr_100'];
+    valueCntr50 = json['valueCntr_50'];
+    valueCntr20 = json['valueCntr_20'];
+    valueCntr10 = json['valueCntr_10'];
+    valueCntr5 = json['valueCntr_5'];
+    valueCntr2 = json['valueCntr_2'];
+    valueCntr1 = json['valueCntr_1'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['value_2000'] = this.value2000;
-    data['value_500'] = this.value500;
-    data['value_100'] = this.value100;
-    data['value_50'] = this.value50;
-    data['value_20'] = this.value20;
-    data['value_10'] = this.value10;
-    data['value_5'] = this.value5;
-    data['value_2'] = this.value2;
-    data['value_1'] = this.value1;
+    data['valueCntr_2000'] = this.valueCntr2000;
+    data['valueCntr_500'] = this.valueCntr500;
+    data['valueCntr_200'] = this.valueCntr200;
+    data['valueCntr_100'] = this.valueCntr100;
+    data['valueCntr_50'] = this.valueCntr50;
+    data['valueCntr_20'] = this.valueCntr20;
+    data['valueCntr_10'] = this.valueCntr10;
+    data['valueCntr_5'] = this.valueCntr5;
+    data['valueCntr_2'] = this.valueCntr2;
+    data['valueCntr_1'] = this.valueCntr1;
     return data;
   }
 }

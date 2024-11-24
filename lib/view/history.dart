@@ -64,7 +64,7 @@ class _HistoryState extends State<History> {
                           children: [
                             SlidableAction(
                               onPressed: (_) {
-                                historyController.deleteHistory(index);
+                                historyController.deleteHistory(data.id);
                               },
                               backgroundColor: Colors.redAccent,
                               foregroundColor: Colors.white,
@@ -82,8 +82,6 @@ class _HistoryState extends State<History> {
                             ),
                             SlidableAction(
                               onPressed: (__) {
-                                print(data.name);
-                                print(data.cashvalue?.value2000?[0]);
                                 String textToShare = '''
 ${data.category}
 Denomination
@@ -91,11 +89,19 @@ ${data.date} ${data.time}
 Rgg
 ---------------------------------------
 Rupee x Counts = Total
-₹ 2,000  x ${data.cashvalue} = ₹ 44,000
-₹ 500    x 56 = ₹ 28,000
+₹ 2000    x ${data.cashvalue?.valueCntr2000 ?? 0} = ${formatCurrency.format((data.cashvalue?.valueCntr2000 ?? 0) * 2000)}
+₹ 500    x ${data.cashvalue?.valueCntr500 ?? 0} = ${formatCurrency.format((data.cashvalue?.valueCntr500 ?? 0) * 500)}
+₹ 200    x ${data.cashvalue?.valueCntr200 ?? 0} = ${formatCurrency.format((data.cashvalue?.valueCntr200 ?? 0) * 200)}
+₹ 100    x ${data.cashvalue?.valueCntr100 ?? 0} = ${formatCurrency.format((data.cashvalue?.valueCntr100 ?? 0) * 100)}
+₹ 50    x ${data.cashvalue?.valueCntr50 ?? 0} = ${formatCurrency.format((data.cashvalue?.valueCntr50 ?? 0) * 50)}
+₹ 20    x ${data.cashvalue?.valueCntr20 ?? 0} = ${formatCurrency.format((data.cashvalue?.valueCntr20 ?? 0) * 50)}
+₹ 10    x ${data.cashvalue?.valueCntr10 ?? 0} = ${formatCurrency.format((data.cashvalue?.valueCntr10 ?? 0) * 50)}
+₹ 5    x ${data.cashvalue?.valueCntr5 ?? 0} = ${formatCurrency.format((data.cashvalue?.valueCntr5 ?? 0) * 50)}
+₹ 2    x ${data.cashvalue?.valueCntr2 ?? 0} = ${formatCurrency.format((data.cashvalue?.valueCntr2 ?? 0) * 50)}
+₹ 5    x ${data.cashvalue?.valueCntr1 ?? 0} = ${formatCurrency.format((data.cashvalue?.valueCntr1 ?? 0) * 50)}
 ---------------------------------------
 Total Counts:
-78
+${(data.cashvalue?.valueCntr2000 ?? 0) + (data.cashvalue?.valueCntr500 ?? 0) + (data.cashvalue?.valueCntr200 ?? 0) + (data.cashvalue?.valueCntr100 ?? 0) + (data.cashvalue?.valueCntr50 ?? 0) + (data.cashvalue?.valueCntr20 ?? 0) + (data.cashvalue?.valueCntr10 ?? 0) + (data.cashvalue?.valueCntr5 ?? 0) + (data.cashvalue?.valueCntr2 ?? 0) + (data.cashvalue?.valueCntr1 ?? 0)}
 Grand Total Amount:
 ${formatCurrency.format(data.total)}
 ${formatCurrency.format(data.total).split('.')[0]} only/-

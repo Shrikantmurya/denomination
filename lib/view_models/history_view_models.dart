@@ -21,7 +21,6 @@ class HistoryController extends GetxController {
   }
 
   Future<void> historyData() async {
-    dynamic cashJson;
     final dbHelper = DatabaseHelper.instance;
 
     final List<Map<String, dynamic>> retrievedData =
@@ -35,16 +34,21 @@ class HistoryController extends GetxController {
           mutableData['cashvalue'] is String) {
         String cashvalueString = mutableData['cashvalue'];
 
-        // Ensure cashvalueString is valid JSON before attempting to decode
         print('Raw cashvalueString: $cashvalueString');
 
         try {
-          // Check if the string is properly formatted before decoding
+          cashvalueString = cashvalueString.replaceAllMapped(
+            RegExp(r'(\w+):'),
+            (match) => '"${match.group(1)}":',
+          );
+
+          print('Processed cashvalueString: $cashvalueString');
+
           var parsedCashValue = jsonDecode(cashvalueString);
 
-          print('Parsed cashvalue: $parsedCashValue');
+          mutableData['cashvalue'] = parsedCashValue;
 
-          mutableData['cashvalue'] = Cashvalue.fromJson(parsedCashValue);
+          print('Parsed Cashvalue object: ${mutableData['cashvalue']}');
         } catch (e) {
           print('Error decoding cashvalue: $e');
           mutableData['cashvalue'] = null;
@@ -59,8 +63,13 @@ class HistoryController extends GetxController {
 
     if (userList.value.retrievedData != null &&
         userList.value.retrievedData!.isNotEmpty) {
-      var cashvalue = userList.value.retrievedData?[0].cashvalue;
-      print(cashvalue);
+      var cashvalue = userList.value.retrievedData![0].cashvalue?.valueCntr500;
+
+      if (cashvalue != null) {
+        print('Cashvalue: ${cashvalue}');
+      } else {
+        print('Cashvalue is null');
+      }
     } else {
       print('retrievedData is empty or null');
     }

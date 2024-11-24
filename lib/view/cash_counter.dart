@@ -419,46 +419,26 @@ class _CashCounterState extends State<CashCounter> {
                                     rs500.value +
                                     rs2000.value,
                                 {
-                                  "value_2000": [
-                                    rs2000.value,
-                                    int.tryParse(rs200Controller.text) ?? 0
-                                  ],
-                                  "value_500": [
-                                    rs500.value,
-                                    int.tryParse(rs500Controller.text) ?? 0
-                                  ],
-                                  "value_200": [
-                                    rs200.value,
-                                    int.tryParse(rs200Controller.text) ?? 0
-                                  ],
-                                  "value_100": [
-                                    rs100.value,
-                                    int.tryParse(rs100Controller.text) ?? 0
-                                  ],
-                                  "value_50": [
-                                    rs50.value,
-                                    int.tryParse(rs50Controller.text) ?? 0
-                                  ],
-                                  "value_20": [
-                                    rs20.value,
-                                    int.tryParse(rs20Controller.text) ?? 0
-                                  ],
-                                  "value_10": [
-                                    rs10.value,
-                                    int.tryParse(rs10Controller.text) ?? 0
-                                  ],
-                                  "value_5": [
-                                    rs5.value,
-                                    int.tryParse(rs5Controller.text) ?? 0
-                                  ],
-                                  "value_2": [
-                                    rs2.value,
-                                    int.tryParse(rs2Controller.text) ?? 0
-                                  ],
-                                  "value_1": [
-                                    rs1.value,
-                                    int.tryParse(rs1Controller.text) ?? 0
-                                  ],
+                                  "valueCntr_2000":
+                                      int.tryParse(rs2000Controller.text) ?? 0,
+                                  "valueCntr_500":
+                                      int.tryParse(rs500Controller.text) ?? 0,
+                                  "valueCntr_200":
+                                      int.tryParse(rs200Controller.text) ?? 0,
+                                  "valueCntr_100":
+                                      int.tryParse(rs100Controller.text) ?? 0,
+                                  "valueCntr_50":
+                                      int.tryParse(rs50Controller.text) ?? 0,
+                                  "valueCntr_20":
+                                      int.tryParse(rs20Controller.text) ?? 0,
+                                  "valueCntr_10":
+                                      int.tryParse(rs10Controller.text) ?? 0,
+                                  "valueCntr_5":
+                                      int.tryParse(rs5Controller.text) ?? 0,
+                                  "valueCntr_2":
+                                      int.tryParse(rs2Controller.text) ?? 0,
+                                  "valueCntr_1":
+                                      int.tryParse(rs5Controller.text) ?? 0,
                                 },
                               )),
                       FlutterBtn(

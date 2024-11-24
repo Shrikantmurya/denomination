@@ -10,7 +10,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Locale? savedLocale = await _getSavedLocale();
 
-  // Initialize ThemeController using Get.put to make it accessible globally
   Get.put(ThemeController());
 
   runApp(MyApp(savedLocale: savedLocale));
@@ -24,7 +23,7 @@ Future<Locale?> _getSavedLocale() async {
   if (languageCode != null && countryCode != null) {
     return Locale(languageCode, countryCode);
   }
-  return null; // Fallback to default locale
+  return null;
 }
 
 class MyApp extends StatelessWidget {
