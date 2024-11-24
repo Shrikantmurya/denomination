@@ -37,6 +37,7 @@ class HistoryController extends GetxController {
         print('Raw cashvalueString: $cashvalueString');
 
         try {
+          // Preprocess the string to ensure valid JSON format
           cashvalueString = cashvalueString.replaceAllMapped(
             RegExp(r'(\w+):'),
             (match) => '"${match.group(1)}":',
@@ -44,16 +45,13 @@ class HistoryController extends GetxController {
 
           print('Processed cashvalueString: $cashvalueString');
 
+          // Parse the corrected JSON string
           var parsedCashValue = jsonDecode(cashvalueString);
 
+          // Map the parsed data to the Cashvalue object
           mutableData['cashvalue'] = parsedCashValue;
 
-<<<<<<< HEAD
           print('Parsed Cashvalue object: ${mutableData['cashvalue']}');
-=======
-          mutableData['cashvalue'] = parsedCashValue.toJson();
-          ;
->>>>>>> 61dc6a5 (update)
         } catch (e) {
           print('Error decoding cashvalue: $e');
           mutableData['cashvalue'] = null;
@@ -63,15 +61,17 @@ class HistoryController extends GetxController {
       return mutableData;
     }).toList();
 
+    // Update the userList
     setUserList(
         HistoryListModel.fromJson({"retrievedData": dataWithParsedCashValue}));
 
+    // Debug: Check if the userList has valid data
     if (userList.value.retrievedData != null &&
         userList.value.retrievedData!.isNotEmpty) {
       var cashvalue = userList.value.retrievedData![0].cashvalue?.valueCntr500;
 
       if (cashvalue != null) {
-        print('Cashvalue: ${cashvalue}');
+        print('Cashvalue: ${cashvalue}'); // Example field access
       } else {
         print('Cashvalue is null');
       }
