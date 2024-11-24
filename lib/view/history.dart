@@ -106,8 +106,8 @@ ${(data.cashvalue?.valueCntr2000 ?? 0) + (data.cashvalue?.valueCntr500 ?? 0) + (
 =======
 Grand Total Amount:
 ${formatCurrency.format(data.total)}
-${Utils.convertNumberToWords(data.total!.round() ?? 0)};
-                                )} only/-
+${Utils.convertNumberToWords(data.total!.round() ?? 0)}
+                                 only/-
 ''';
                                 Share.share(textToShare);
                               },
