@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../utils/utils.dart';
 import '../view_models/history_view_models.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:share_plus/share_plus.dart';
@@ -107,7 +108,7 @@ ${(data.cashvalue?.valueCntr2000 ?? 0) + (data.cashvalue?.valueCntr500 ?? 0) + (
 >>>>>>> 61dc6a5 (update)
 Grand Total Amount:
 ${formatCurrency.format(data.total)}
-${formatCurrency.format(data.total).split('.')[0]} only/-
+${Utils.convertNumberToWords(data.total as int)} only/-
 ''';
                                 Share.share(textToShare);
                               },
