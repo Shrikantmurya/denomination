@@ -48,7 +48,12 @@ class HistoryController extends GetxController {
 
           mutableData['cashvalue'] = parsedCashValue;
 
+<<<<<<< HEAD
           print('Parsed Cashvalue object: ${mutableData['cashvalue']}');
+=======
+          mutableData['cashvalue'] = parsedCashValue.toJson();
+          ;
+>>>>>>> 61dc6a5 (update)
         } catch (e) {
           print('Error decoding cashvalue: $e');
           mutableData['cashvalue'] = null;
