@@ -50,7 +50,7 @@ class _CashCounterState extends State<CashCounter> {
   RxInt rs1Note = 0.obs;
   RxBool cashImage_old = false.obs;
   List<bool> isSelected = [true, false];
-
+  RxInt totalValue = 0.obs;
   final formatCurrency = NumberFormat.currency(
     locale: 'en_IN',
     symbol: '₹ ',
@@ -125,7 +125,16 @@ class _CashCounterState extends State<CashCounter> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+    totalValue.value = rs1.value +
+        rs2.value +
+        rs5.value +
+        rs10.value +
+        rs20.value +
+        rs50.value +
+        rs100.value +
+        rs200.value +
+        rs500.value +
+        rs2000.value;
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
@@ -155,51 +164,43 @@ class _CashCounterState extends State<CashCounter> {
                       ),
                     ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  child: Stack(
                     children: [
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: PopupMenuButton<int>(
-                          icon: const Icon(Icons.more_vert,
-                              color: Colors.white, size: 20),
-                          itemBuilder: (context) => [
-                            PopupMenuItem(
-                              value: 1,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.history,
-                                    color: Theme.of(context).primaryColor,
-                                    size: 20,
-                                  ),
-                                  SizedBox(width: 10),
-                                  Text("History",
-                                      style: TextStyle(
-                                          fontSize: 13, color: Colors.white)),
-                                ],
+                      Positioned(
+                        right: 10,
+                        top: 30,
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: PopupMenuButton<int>(
+                            icon: const Icon(Icons.more_vert,
+                                color: Colors.white, size: 20),
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                value: 1,
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.history,
+                                      color: Theme.of(context).primaryColor,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    const Text("History",
+                                        style: TextStyle(
+                                            fontSize: 13, color: Colors.white)),
+                                  ],
+                                ),
+                                onTap: () {
+                                  Get.toNamed(RouteName.history);
+                                },
                               ),
-                              onTap: () {
-                                Get.toNamed(RouteName.history);
-                              },
-                            ),
-                          ],
-                          color: const Color(0xFF464646),
-                          elevation: 2,
+                            ],
+                            color: const Color(0xFF464646),
+                            elevation: 2,
+                          ),
                         ),
                       ),
-                      ((rs1.value +
-                                  rs2.value +
-                                  rs5.value +
-                                  rs10.value +
-                                  rs20.value +
-                                  rs50.value +
-                                  rs100.value +
-                                  rs200.value +
-                                  rs500.value +
-                                  rs2000.value) !=
-                              0)
+                      (totalValue.value != 0)
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -207,7 +208,7 @@ class _CashCounterState extends State<CashCounter> {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15.0),
-                                  child: Text('Total Amount}',
+                                  child: Text('Total Amount',
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge),
@@ -218,16 +219,7 @@ class _CashCounterState extends State<CashCounter> {
                                   child: Text(
                                       formatCurrency
                                           .format(
-                                            rs1.value +
-                                                rs2.value +
-                                                rs5.value +
-                                                rs10.value +
-                                                rs20.value +
-                                                rs50.value +
-                                                rs100.value +
-                                                rs200.value +
-                                                rs500.value +
-                                                rs2000.value,
+                                            totalValue.value,
                                           )
                                           .split('.')[0],
                                       style: Theme.of(context)
@@ -238,20 +230,23 @@ class _CashCounterState extends State<CashCounter> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15.0, vertical: 15.0),
                                   child: Text(
-                                      '${Utils.convertNumberToWords(rs1.value + rs2.value + rs5.value + rs10.value + rs20.value + rs50.value + rs100.value + rs200.value + rs500.value + rs2000.value)} Only/-',
+                                      '${Utils.convertNumberToWords(totalValue.value)} Only/-',
                                       style: const TextStyle(
                                           color: Colors.white, fontSize: 14)),
                                 ),
                               ],
                             )
-                          : const Padding(
-                              padding: EdgeInsets.only(bottom: 20, left: 15),
-                              child: Text(
-                                'Denomination',
-                                style: TextStyle(
-                                    fontSize: 28,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600),
+                          : const Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(bottom: 20, left: 15),
+                                child: Text(
+                                  'Denomination',
+                                  style: TextStyle(
+                                      fontSize: 28,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ),
                             )
                     ],
@@ -269,7 +264,7 @@ class _CashCounterState extends State<CashCounter> {
                           controller: rs2000Controller,
                           label: '₹  2000 X',
                           onChanged: (value) {
-                            rs500.value = 2000 *
+                            rs2000.value = 2000 *
                                 (value.isNotEmpty ? int.parse(value) : 0);
                             rs2000Note.value =
                                 value.isNotEmpty ? int.parse(value) : 0;
@@ -381,17 +376,7 @@ class _CashCounterState extends State<CashCounter> {
                 ),
               ],
             ),
-            floatingActionButton: (rs1.value +
-                        rs2.value +
-                        rs5.value +
-                        rs10.value +
-                        rs20.value +
-                        rs50.value +
-                        rs100.value +
-                        rs200.value +
-                        rs500.value +
-                        rs2000.value) !=
-                    0
+            floatingActionButton: totalValue.value != 0
                 ? SizedBox(
                     width: 70,
                     height: 70,
@@ -456,16 +441,7 @@ class _CashCounterState extends State<CashCounter> {
                           icn: Icons.download,
                           event: () => showFullScreenDialog(
                                 context,
-                                rs1.value +
-                                    rs2.value +
-                                    rs5.value +
-                                    rs10.value +
-                                    rs20.value +
-                                    rs50.value +
-                                    rs100.value +
-                                    rs200.value +
-                                    rs500.value +
-                                    rs2000.value,
+                                totalValue.value,
                                 {
                                   "valueCntr_2000":
                                       int.tryParse(rs2000Controller.text) ?? 0,
@@ -632,7 +608,7 @@ class _CashCounterState extends State<CashCounter> {
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
                                 backgroundColor:
-                                    Color.fromARGB(255, 24, 44, 67),
+                                    const Color.fromARGB(255, 24, 44, 67),
                                 title: Text('Confirmation',
                                     style: TextStyle(
                                         color: Theme.of(context).primaryColor,

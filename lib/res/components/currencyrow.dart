@@ -29,15 +29,13 @@ class _CurrencyRowState extends State<CurrencyRow> {
     decimalDigits: 0,
   );
 
-  bool hasText = false;
+  RxBool hasText = false.obs;
 
   @override
   void initState() {
     super.initState();
     widget.controller.addListener(() {
-      setState(() {
-        hasText = widget.controller.text.isNotEmpty;
-      });
+      hasText.value = widget.controller.text.isNotEmpty;
     });
   }
 
@@ -55,7 +53,7 @@ class _CurrencyRowState extends State<CurrencyRow> {
                 widget.label,
                 style: const TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 20,
+                    fontSize: 17,
                     color: Colors.white),
               ),
               const SizedBox(
@@ -69,10 +67,10 @@ class _CurrencyRowState extends State<CurrencyRow> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(7),
+                      LengthLimitingTextInputFormatter(5),
                     ],
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 17,
                       fontWeight: FontWeight.w400,
                       color: Colors.white,
                     ),
@@ -85,7 +83,7 @@ class _CurrencyRowState extends State<CurrencyRow> {
                           color: Color.fromARGB(255, 185, 185, 185),
                         ),
                       ),
-                      suffixIcon: hasText
+                      suffixIcon: hasText.value
                           ? IconButton(
                               icon:
                                   const Icon(Icons.cancel, color: Colors.grey),
@@ -93,12 +91,10 @@ class _CurrencyRowState extends State<CurrencyRow> {
                               onPressed: () {
                                 widget.controller.clear();
                                 widget.onChanged('');
-                                setState(() {
-                                  hasText = false;
-                                });
+                                hasText.value = false;
                               },
                             )
-                          : null, // Only show the clear button if there is text
+                          : null,
                     ),
                     onChanged: widget.onChanged,
                   )),
@@ -109,7 +105,7 @@ class _CurrencyRowState extends State<CurrencyRow> {
                 '=',
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 20,
+                    fontSize: 17,
                     color: Colors.white),
               ),
               const SizedBox(
@@ -124,7 +120,7 @@ class _CurrencyRowState extends State<CurrencyRow> {
                   .split('.')[0],
               style: const TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: 20,
+                  fontSize: 16,
                   color: Colors.white),
             ),
           ),
